@@ -6,19 +6,21 @@ import (
 	"os"
 
 	"github.com/jackc/pgx/v4"
+	"github.com/joho/godotenv"
 )
 
 const (
 	dbURL = "DB_URL"
 )
 
-var (
-	Client *pgx.Conn
-	url    = os.Getenv(dbURL)
-)
+var Client *pgx.Conn
 
 func init() {
-	config, err := pgx.ParseConfig(url)
+	if err := godotenv.Load(); err != nil {
+		log.Fatal(".env not found")
+	}
+
+	config, err := pgx.ParseConfig(os.Getenv(dbURL))
 	if err != nil {
 		log.Fatal(err)
 	}
