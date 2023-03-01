@@ -16,7 +16,7 @@ const (
 var Client *pgx.Conn
 
 func init() {
-	if err := godotenv.Load(); err != nil {
+	if err := godotenv.Load("db/.env"); err != nil {
 		log.Fatal(".env not found")
 	}
 
